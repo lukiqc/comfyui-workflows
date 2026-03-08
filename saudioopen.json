@@ -1,0 +1,78 @@
+{
+  "last_node_id": 3,
+  "last_link_id": 2,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "CLIPTextEncode",
+      "pos": [250, 300],
+      "size": [400, 200],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "TEXT",
+          "type": "STRING",
+          "links": [1]
+        }
+      ],
+      "widgets_values": [
+        "field recording of a busy coffee shop ambience with people chatting softly, cups clinking and espresso machine steaming"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "StableAudioSampler",
+      "pos": [700, 300],
+      "size": [350, 300],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [2]
+        }
+      ],
+      "widgets_values": [
+        "model.safetensors",
+        100,
+        7,
+        30,
+        "dpmpp-3m-sde"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "SaveAudio",
+      "pos": [1100, 320],
+      "size": [250, 150],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 2
+        }
+      ],
+      "widgets_values": [
+        "stable_audio_output"
+      ]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 2, 0, "STRING"],
+    [2, 2, 0, 3, 0, "AUDIO"]
+  ]
+}
