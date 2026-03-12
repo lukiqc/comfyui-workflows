@@ -47,7 +47,7 @@ while true; do
   done
 
   echo ""
-  printf 'Select a workflow (1-%d) or q to quit: ' "${#SCRIPTS[@]}"
+  printf 'Select workflows (e.g. 1,3,5 or 1-%d) or q to quit: ' "${#SCRIPTS[@]}"
   read -r choice || true
 
   # Quit on q, Q, or empty input
@@ -57,26 +57,47 @@ while true; do
       ;;
   esac
 
-  # Validate numeric input within range
-  if ! [[ "$choice" =~ ^[0-9]+$ ]] || \
-     (( choice < 1 )) || \
-     (( choice > ${#SCRIPTS[@]} )); then
-    echo "Invalid selection. Please enter a number between 1 and ${#SCRIPTS[@]}."
-    continue
-  fi
+  # Expand selection into an array of numbers (supports commas and ranges)
+  selected=()
+  IFS=',' read -ra parts <<< "$choice"
+  valid=true
+  for part in "${parts[@]}"; do
+    part="${part// /}"  # strip spaces
+    if [[ "$part" =~ ^([0-9]+)-([0-9]+)$ ]]; then
+      lo="${BASH_REMATCH[1]}"
+      hi="${BASH_REMATCH[2]}"
+      if (( lo < 1 || hi > ${#SCRIPTS[@]} || lo > hi )); then
+        echo "Invalid range: $part"
+        valid=false; break
+      fi
+      for (( n=lo; n<=hi; n++ )); do selected+=("$n"); done
+    elif [[ "$part" =~ ^[0-9]+$ ]]; then
+      if (( part < 1 || part > ${#SCRIPTS[@]} )); then
+        echo "Out of range: $part"
+        valid=false; break
+      fi
+      selected+=("$part")
+    else
+      echo "Invalid input: $part"
+      valid=false; break
+    fi
+  done
+  $valid || continue
 
-  TARGET="${SCRIPTS[$((choice - 1))]}"
-  echo ""
-  echo "Running: $(basename "$TARGET") ..."
-  echo ""
-
-  chmod +x "$TARGET"
-  "$TARGET" "$COMFY_DIR" || {
+  for num in "${selected[@]}"; do
+    TARGET="${SCRIPTS[$((num - 1))]}"
     echo ""
-    echo "WARNING: Script exited with a non-zero status. Check output above."
-  }
+    echo "Running: $(basename "$TARGET") ..."
+    echo ""
 
-  # Copy JSON workflow files after each install
+    chmod +x "$TARGET"
+    "$TARGET" "$COMFY_DIR" || {
+      echo ""
+      echo "WARNING: Script exited with a non-zero status. Check output above."
+    }
+  done
+
+  # Copy JSON workflow files once after all installs
   WORKFLOW_DIR="$COMFY_DIR/user/default/workflows"
   mkdir -p "$WORKFLOW_DIR"
   if ls "$SCRIPT_DIR"/*.json &>/dev/null; then
