@@ -1,0 +1,694 @@
+{
+  "id": "77239f7d-3e48-4cc2-9a29-0ce70819aae9",
+  "revision": 0,
+  "last_node_id": 26,
+  "last_link_id": 30,
+  "nodes": [
+    {
+      "id": 8,
+      "type": "PrimitiveString",
+      "pos": [
+        -542.0366135353512,
+        429.9570385339822
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "PrimitiveString"
+      },
+      "widgets_values": [
+        "jlaw"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 7,
+      "type": "FB_Qwen3TTSVoiceClonePrompt",
+      "pos": [
+        526.2570228282856,
+        271.6288567157998
+      ],
+      "size": [
+        400,
+        232
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ref_audio",
+          "type": "AUDIO",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "voice_clone_prompt",
+          "type": "VOICE_CLONE_PROMPT",
+          "links": [
+            7,
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "qwen3-tts-comfyui",
+        "ver": "17207f8b9d1e2e92cb5cf0e487222656757bedf5",
+        "Node name for S&R": "FB_Qwen3TTSVoiceClonePrompt"
+      },
+      "widgets_values": [
+        "",
+        "0.6B",
+        "auto",
+        "bf16",
+        "auto",
+        true,
+        false
+      ],
+      "color": "#332922",
+      "bgcolor": "#593930"
+    },
+    {
+      "id": 21,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        531.5655609221945,
+        583.5545658684374
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            24,
+            25
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "Good one! Okay, fine, I'm just gonna leave this sock monkey here. Goodbye? The wild dogs are howling in the woods and even if this fort will not shelter our shamans, it isn't doomed to repeat their history of past, so let's just eat like free kings if only for tonight.\n\nBefore you criticize someone, walk a mile in their shoes. That way, when you DO criticize them, you're a mile away and you have their shoes!"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 11,
+      "type": "MelBandRoFormerSampler",
+      "pos": [
+        -184.99218885743605,
+        280.6643981619398
+      ],
+      "size": [
+        231.2720703125,
+        46
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MELROFORMERMODEL",
+          "link": 11
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "vocals",
+          "type": "AUDIO",
+          "links": [
+            14,
+            28
+          ]
+        },
+        {
+          "name": "instruments",
+          "type": "AUDIO",
+          "links": [
+            26
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-melbandroformer",
+        "ver": "1.0.2",
+        "Node name for S&R": "MelBandRoFormerSampler",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.7"
+        }
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 13,
+      "type": "ResembleEnhance",
+      "pos": [
+        86.72689855003642,
+        283.627559007277
+      ],
+      "size": [
+        334.54296875,
+        130
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "enhanced_audio",
+          "type": "AUDIO",
+          "links": [
+            19,
+            27
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "EuphoricPenguin/resemble-enhance-comfyui",
+        "ver": "b88cec4d20de3011df10b9c2c25b1b11f11c05c0",
+        "Node name for S&R": "ResembleEnhance"
+      },
+      "widgets_values": [
+        "Midpoint",
+        64,
+        0.5,
+        true
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 22,
+      "type": "PreviewAudio",
+      "pos": [
+        -185.1578828542151,
+        622.7377890758013
+      ],
+      "size": [
+        270,
+        88
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 26
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "PreviewAudio"
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 24,
+      "type": "PreviewAudio",
+      "pos": [
+        -186.9760646723966,
+        478.19233453034605
+      ],
+      "size": [
+        270,
+        88
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 28
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "PreviewAudio"
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 23,
+      "type": "PreviewAudio",
+      "pos": [
+        161.20575350942119,
+        484.55597089398134
+      ],
+      "size": [
+        270,
+        88
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 27
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "PreviewAudio"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 3,
+      "type": "FB_Qwen3TTSVoiceClone",
+      "pos": [
+        1018.3168079522482,
+        156.43875754224547
+      ],
+      "size": [
+        405,
+        820.69
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ref_audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "voice_clone_prompt",
+          "shape": 7,
+          "type": "VOICE_CLONE_PROMPT",
+          "link": 7
+        },
+        {
+          "name": "config",
+          "shape": 7,
+          "type": "TTS_CONFIG",
+          "link": null
+        },
+        {
+          "name": "target_text",
+          "type": "STRING",
+          "widget": {
+            "name": "target_text"
+          },
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            9,
+            29
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "qwen3-tts-comfyui",
+        "ver": "17207f8b9d1e2e92cb5cf0e487222656757bedf5",
+        "Node name for S&R": "FB_Qwen3TTSVoiceClone"
+      },
+      "widgets_values": [
+        "",
+        "0.6B",
+        "cuda",
+        "bf16",
+        "English",
+        "",
+        771651838332585,
+        "randomize",
+        2048,
+        0.8,
+        20,
+        1,
+        1.05,
+        false,
+        "auto",
+        false,
+        ""
+      ],
+      "color": "#332922",
+      "bgcolor": "#593930"
+    },
+    {
+      "id": 25,
+      "type": "PreviewAudio",
+      "pos": [
+        1503.023935327603,
+        70.01051634852757
+      ],
+      "size": [
+        270,
+        88
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 29
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "PreviewAudio"
+      },
+      "widgets_values": [],
+      "color": "#332922",
+      "bgcolor": "#593930"
+    },
+    {
+      "id": 6,
+      "type": "FB_Qwen3TTSSaveVoice",
+      "pos": [
+        1496.1082624977048,
+        278.3150302695196
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "voice_clone_prompt",
+          "type": "VOICE_CLONE_PROMPT",
+          "link": 8
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 9
+        },
+        {
+          "name": "filename",
+          "type": "STRING",
+          "widget": {
+            "name": "filename"
+          },
+          "link": 10
+        },
+        {
+          "name": "ref_text",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "ref_text"
+          },
+          "link": 25
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "qwen3-tts-comfyui",
+        "ver": "17207f8b9d1e2e92cb5cf0e487222656757bedf5",
+        "Node name for S&R": "FB_Qwen3TTSSaveVoice"
+      },
+      "widgets_values": [
+        "troi",
+        ""
+      ],
+      "color": "#332922",
+      "bgcolor": "#593930"
+    },
+    {
+      "id": 9,
+      "type": "MelBandRoFormerModelLoader",
+      "pos": [
+        -558.1483108080799,
+        277.420069443073
+      ],
+      "size": [
+        328.1861328125,
+        58
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MELROFORMERMODEL",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-melbandroformer",
+        "ver": "1.0.2",
+        "Node name for S&R": "MelBandRoFormerModelLoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.7"
+        }
+      },
+      "widgets_values": [
+        "MelBandRoformer_fp16.safetensors"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 26,
+      "type": "LoadAudio",
+      "pos": [
+        -537.342246490579,
+        572.4606072576179
+      ],
+      "size": [
+        282.798828125,
+        136
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "LoadAudio"
+      },
+      "widgets_values": [
+        "ComfyUI_temp_fiaie_00001_.flac",
+        null,
+        ""
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    }
+  ],
+  "links": [
+    [
+      7,
+      7,
+      0,
+      3,
+      1,
+      "VOICE_CLONE_PROMPT"
+    ],
+    [
+      8,
+      7,
+      0,
+      6,
+      0,
+      "VOICE_CLONE_PROMPT"
+    ],
+    [
+      9,
+      3,
+      0,
+      6,
+      1,
+      "AUDIO"
+    ],
+    [
+      10,
+      8,
+      0,
+      6,
+      2,
+      "STRING"
+    ],
+    [
+      11,
+      9,
+      0,
+      11,
+      0,
+      "MELROFORMERMODEL"
+    ],
+    [
+      14,
+      11,
+      0,
+      13,
+      0,
+      "AUDIO"
+    ],
+    [
+      19,
+      13,
+      0,
+      7,
+      0,
+      "AUDIO"
+    ],
+    [
+      24,
+      21,
+      0,
+      3,
+      3,
+      "STRING"
+    ],
+    [
+      25,
+      21,
+      0,
+      6,
+      3,
+      "STRING"
+    ],
+    [
+      26,
+      11,
+      1,
+      22,
+      0,
+      "AUDIO"
+    ],
+    [
+      27,
+      13,
+      0,
+      23,
+      0,
+      "AUDIO"
+    ],
+    [
+      28,
+      11,
+      0,
+      24,
+      0,
+      "AUDIO"
+    ],
+    [
+      29,
+      3,
+      0,
+      25,
+      0,
+      "AUDIO"
+    ],
+    [
+      30,
+      26,
+      0,
+      11,
+      1,
+      "AUDIO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "workflowRendererVersion": "LG",
+    "ds": {
+      "scale": 0.7513148009015777,
+      "offset": [
+        764.943246490579,
+        119.65939274238175
+      ]
+    },
+    "frontendVersion": "1.39.19"
+  },
+  "version": 0.4
+}

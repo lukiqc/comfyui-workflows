@@ -1,0 +1,652 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "revision": 0,
+  "last_node_id": 14,
+  "last_link_id": 15,
+  "nodes": [
+    {
+      "id": 6,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -40.98066860272057,
+        -47.27578165704658
+      ],
+      "size": [
+        387.1550294426621,
+        96.072510945175
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "Reference audio transcript"
+      },
+      "widgets_values": [
+        "reference audio transcript goes here"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -36.50550082322873,
+        373.6216439630232
+      ],
+      "size": [
+        387.1550294426621,
+        96.072510945175
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "Reference audio transcript"
+      },
+      "widgets_values": [
+        "reference audio transcript goes here"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -36.5055008232287,
+        772.9834558366208
+      ],
+      "size": [
+        387.1550294426621,
+        96.072510945175
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "Reference audio transcript"
+      },
+      "widgets_values": [
+        "reference audio transcript goes here"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "LoadAudio",
+      "pos": [
+        12.124053243462916,
+        -230.82690020158344
+      ],
+      "size": [
+        282.798828125,
+        136
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "LoadAudio"
+      },
+      "widgets_values": [
+        "ComfyUI_temp_dccmk_00001_.flac",
+        null,
+        null
+      ]
+    },
+    {
+      "id": 7,
+      "type": "LoadAudio",
+      "pos": [
+        19.7077038978305,
+        188.51628398104828
+      ],
+      "size": [
+        282.798828125,
+        136
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "LoadAudio"
+      },
+      "widgets_values": [
+        "ComfyUI_temp_dccmk_00001_.flac",
+        null,
+        null
+      ]
+    },
+    {
+      "id": 10,
+      "type": "LoadAudio",
+      "pos": [
+        11.936496710641109,
+        587.8780958546461
+      ],
+      "size": [
+        282.798828125,
+        136
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "LoadAudio"
+      },
+      "widgets_values": [
+        "ComfyUI_temp_dccmk_00001_.flac",
+        null,
+        null
+      ]
+    },
+    {
+      "id": 1,
+      "type": "FB_Qwen3TTSVoiceClonePrompt",
+      "pos": [
+        389.8654661426604,
+        -229.5774348837333
+      ],
+      "size": [
+        400,
+        232
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ref_audio",
+          "type": "AUDIO",
+          "link": 5
+        },
+        {
+          "name": "ref_text",
+          "type": "STRING",
+          "widget": {
+            "name": "ref_text"
+          },
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "voice_clone_prompt",
+          "type": "VOICE_CLONE_PROMPT",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "qwen3-tts-comfyui",
+        "ver": "17207f8b9d1e2e92cb5cf0e487222656757bedf5",
+        "Node name for S&R": "FB_Qwen3TTSVoiceClonePrompt"
+      },
+      "widgets_values": [
+        "",
+        "1.7B",
+        "auto",
+        "bf16",
+        "auto",
+        false,
+        false
+      ]
+    },
+    {
+      "id": 9,
+      "type": "FB_Qwen3TTSVoiceClonePrompt",
+      "pos": [
+        388.1236681724003,
+        191.31999073633642
+      ],
+      "size": [
+        400,
+        232
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ref_audio",
+          "type": "AUDIO",
+          "link": 10
+        },
+        {
+          "name": "ref_text",
+          "type": "STRING",
+          "widget": {
+            "name": "ref_text"
+          },
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "voice_clone_prompt",
+          "type": "VOICE_CLONE_PROMPT",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "qwen3-tts-comfyui",
+        "ver": "17207f8b9d1e2e92cb5cf0e487222656757bedf5",
+        "Node name for S&R": "FB_Qwen3TTSVoiceClonePrompt"
+      },
+      "widgets_values": [
+        "",
+        "1.7B",
+        "auto",
+        "bf16",
+        "auto",
+        false,
+        false
+      ]
+    },
+    {
+      "id": 12,
+      "type": "FB_Qwen3TTSVoiceClonePrompt",
+      "pos": [
+        388.12366817240036,
+        586.0190782976201
+      ],
+      "size": [
+        400,
+        232
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ref_audio",
+          "type": "AUDIO",
+          "link": 12
+        },
+        {
+          "name": "ref_text",
+          "type": "STRING",
+          "widget": {
+            "name": "ref_text"
+          },
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "voice_clone_prompt",
+          "type": "VOICE_CLONE_PROMPT",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "qwen3-tts-comfyui",
+        "ver": "17207f8b9d1e2e92cb5cf0e487222656757bedf5",
+        "Node name for S&R": "FB_Qwen3TTSVoiceClonePrompt"
+      },
+      "widgets_values": [
+        "",
+        "1.7B",
+        "auto",
+        "bf16",
+        "auto",
+        false,
+        false
+      ]
+    },
+    {
+      "id": 2,
+      "type": "FB_Qwen3TTSRoleBank",
+      "pos": [
+        940.8424833863498,
+        138.9085709438117
+      ],
+      "size": [
+        270,
+        366
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prompt_1",
+          "shape": 7,
+          "type": "VOICE_CLONE_PROMPT",
+          "link": 6
+        },
+        {
+          "name": "prompt_2",
+          "shape": 7,
+          "type": "VOICE_CLONE_PROMPT",
+          "link": 14
+        },
+        {
+          "name": "prompt_3",
+          "shape": 7,
+          "type": "VOICE_CLONE_PROMPT",
+          "link": 15
+        },
+        {
+          "name": "prompt_4",
+          "shape": 7,
+          "type": "VOICE_CLONE_PROMPT",
+          "link": null
+        },
+        {
+          "name": "prompt_5",
+          "shape": 7,
+          "type": "VOICE_CLONE_PROMPT",
+          "link": null
+        },
+        {
+          "name": "prompt_6",
+          "shape": 7,
+          "type": "VOICE_CLONE_PROMPT",
+          "link": null
+        },
+        {
+          "name": "prompt_7",
+          "shape": 7,
+          "type": "VOICE_CLONE_PROMPT",
+          "link": null
+        },
+        {
+          "name": "prompt_8",
+          "shape": 7,
+          "type": "VOICE_CLONE_PROMPT",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "role_bank",
+          "type": "QWEN3_ROLE_BANK",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "qwen3-tts-comfyui",
+        "ver": "17207f8b9d1e2e92cb5cf0e487222656757bedf5",
+        "Node name for S&R": "FB_Qwen3TTSRoleBank"
+      },
+      "widgets_values": [
+        "Role1",
+        "Role2",
+        "Role3",
+        "Role4",
+        "Role5",
+        "Role6",
+        "Role7",
+        "Role8"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "PreviewAudio",
+      "pos": [
+        1685.108554906171,
+        70.098530757991
+      ],
+      "size": [
+        270,
+        88
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 8
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.3",
+        "Node name for S&R": "PreviewAudio"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 3,
+      "type": "FB_Qwen3TTSDialogueInference",
+      "pos": [
+        1256.3295960656044,
+        -122.19581647358055
+      ],
+      "size": [
+        389.49047863490523,
+        892.6274377218128
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "role_bank",
+          "type": "QWEN3_ROLE_BANK",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "qwen3-tts-comfyui",
+        "ver": "17207f8b9d1e2e92cb5cf0e487222656757bedf5",
+        "Node name for S&R": "FB_Qwen3TTSDialogueInference"
+      },
+      "widgets_values": [
+        "Role1: ",
+        "1.7B",
+        "auto",
+        "bf16",
+        "Auto",
+        0.2,
+        0.1,
+        0.1,
+        0.4,
+        0.3,
+        true,
+        1,
+        362921742639811,
+        "randomize",
+        2048,
+        0.8,
+        20,
+        1,
+        1.05,
+        "auto",
+        false
+      ]
+    }
+  ],
+  "links": [
+    [
+      5,
+      4,
+      0,
+      1,
+      0,
+      "AUDIO"
+    ],
+    [
+      6,
+      1,
+      0,
+      2,
+      0,
+      "VOICE_CLONE_PROMPT"
+    ],
+    [
+      7,
+      2,
+      0,
+      3,
+      0,
+      "QWEN3_ROLE_BANK"
+    ],
+    [
+      8,
+      3,
+      0,
+      5,
+      0,
+      "AUDIO"
+    ],
+    [
+      9,
+      6,
+      0,
+      1,
+      1,
+      "STRING"
+    ],
+    [
+      10,
+      7,
+      0,
+      9,
+      0,
+      "AUDIO"
+    ],
+    [
+      11,
+      8,
+      0,
+      9,
+      1,
+      "STRING"
+    ],
+    [
+      12,
+      10,
+      0,
+      12,
+      0,
+      "AUDIO"
+    ],
+    [
+      13,
+      11,
+      0,
+      12,
+      1,
+      "STRING"
+    ],
+    [
+      14,
+      9,
+      0,
+      2,
+      1,
+      "VOICE_CLONE_PROMPT"
+    ],
+    [
+      15,
+      12,
+      0,
+      2,
+      2,
+      "VOICE_CLONE_PROMPT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6434006814594168,
+      "offset": [
+        553.4777211909067,
+        634.6035813797974
+      ]
+    },
+    "workflowRendererVersion": "LG",
+    "frontendVersion": "1.39.19"
+  },
+  "version": 0.4
+}
