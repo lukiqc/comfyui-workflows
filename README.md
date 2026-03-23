@@ -1,13 +1,14 @@
-# vast-scripts
+# comfyui-workflows
 
-Automated ComfyUI workflow installers for generative AI on [vast.ai](https://vast.ai) GPU instances. Each workflow is a paired `.sh` installer and `.json` ComfyUI workflow file.
+My custom automated ComfyUI workflow installers for generative AI on [vast.ai](https://vast.ai) GPU instances. Each workflow is a paired `.sh` installer and `.json` ComfyUI workflow file.
 
-## Quick Start
+## Quick Start (in vast.ai terminal)
 
 ```bash
-git clone https://github.com/your-username/vast-scripts
-cd vast-scripts
-bash install.sh /path/to/ComfyUI
+cd ComfyUI
+git clone https://github.com/lukiqc/comfyui-workflows.git
+bash comfyui-workflows/install.sh
+(when prompted, input or press Enter for default ComfyUI directory)
 ```
 
 `install.sh` auto-discovers all available workflows, presents an interactive numbered menu, and installs your selections. After installation, all workflow JSON files are copied to your ComfyUI user workflows directory.
