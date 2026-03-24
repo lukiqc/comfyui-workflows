@@ -51,9 +51,9 @@ find custom_nodes -name "requirements.txt" -exec pip install -r {} \;
 echo "== Downloading models =="
 
 # --- GGUF Models (I2V 14B) ---
-dl "https://huggingface.co/city96/Wan2.2-I2V-A14B-HighNoise-GGUF/resolve/main/Wan2.2-I2V-A14B-HighNoise-Q4_K_S.gguf" \
+dl "https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/HighNoise/Wan2.2-I2V-A14B-HighNoise-Q4_K_S.gguf" \
    "$COMFY_DIR/models/unet/Wan2.2-I2V-A14B-HighNoise-Q4_K_S.gguf"
-dl "https://huggingface.co/city96/Wan2.2-I2V-A14B-LowNoise-GGUF/resolve/main/Wan2.2-I2V-A14B-LowNoise-Q4_K_S.gguf" \
+dl "https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/LowNoise/Wan2.2-I2V-A14B-LowNoise-Q4_K_S.gguf" \
    "$COMFY_DIR/models/unet/Wan2.2-I2V-A14B-LowNoise-Q4_K_S.gguf"
 
 # --- LoRAs ---
