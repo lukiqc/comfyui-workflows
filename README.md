@@ -64,6 +64,11 @@ Models: `flux-2-klein-9b.safetensors`, `qwen_3_8b_fp8mixed.safetensors`, `flux2-
 
 Models: `Wan2_2-Animate-14B_fp8_e4m3fn_scaled_KJ.safetensors`, `umt5-xxl-enc-bf16.safetensors`, `Wan2_1_VAE_bf16.safetensors`, `clip_vision_h.safetensors`
 
+#### Wan2.2 Image-to-Video
+**`wan22-i2v.sh`** — Image-to-video generation using Wan2.2 I2V 14B (GGUF Q4_K_S, both HighNoise and LowNoise variants) plus a 5B TI2V diffusion model for a second-pass upscale. Includes Lightx2v distilled LoRA for fast inference and FusionX LoRA for quality enhancement.
+
+Models: `Wan2.2-I2V-A14B-HighNoise-Q4_K_S.gguf`, `Wan2.2-I2V-A14B-LowNoise-Q4_K_S.gguf`, `wan2.2_ti2v_5B_fp16.safetensors`, `Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors`, `Wan2.1_I2V_14B_FusionX_LoRA.safetensors`, `umt5_xxl_fp8_e4m3fn_scaled.safetensors`, `wan_2.1_vae.safetensors`, `wan2.2_vae.safetensors`
+
 #### SeedVR2 Video Upscale
 **`seedvr2upscale.sh`** — Upscale low-resolution video using the SeedVR2 7B diffusion transformer (FP16).
 
@@ -108,6 +113,7 @@ Models: Full Qwen3-TTS suite (Base, CustomVoice, VoiceDesign, Tokenizer)
 | FLUX.2 Klein Inpaint | FLUX.2 Klein 9B | ~6.6 GB | BF16 |
 | LTX-2 (all variants) | LTX-2 19B | ~6.5 GB | GGUF Q5_K_M |
 | Wan2.2 Animate | Wan2.2 14B | ~4 GB | FP8 |
+| Wan2.2 I2V | Wan2.2 I2V 14B + TI2V 5B | ~7 GB | GGUF Q4_K_S / FP16 |
 | SeedVR2 Upscale | SeedVR2 7B | ~3 GB | FP16 |
 | ZiT Upscale | SeedVR2 3B + Z Image Turbo | ~3 GB | GGUF Q4_K_M / BF16 |
 | Stable Audio Open | Stable Audio Open 1.0 | ~5 GB | FP32 |
