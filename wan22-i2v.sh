@@ -57,7 +57,7 @@ dl "https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/LowNoise
    "$COMFY_DIR/models/unet/Wan2.2-I2V-A14B-LowNoise-Q4_K_S.gguf"
 
 # --- LoRAs ---
-dl "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Lightx2v/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors" \
+dl "https://huggingface.co/lightx2v/Wan2.1-I2V-14B-480P-StepDistill-CfgDistill-Lightx2v/resolve/main/loras/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors" \
    "$COMFY_DIR/models/loras/WAN 2/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors"
 dl "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2.1_I2V_14B_FusionX_LoRA.safetensors" \
    "$COMFY_DIR/models/loras/WAN 2/Wan2.1_I2V_14B_FusionX_LoRA.safetensors"
