@@ -16,9 +16,20 @@ dl() {
   fi
   echo "↓ $url"
   if have_cmd wget; then
-    wget -c "$url" -O "$out"
+    if [[ -n "${HF_TOKEN:-}" ]]; then
+      wget --header="Authorization: Bearer $HF_TOKEN" -c "$url" -O "$out"
+    else
+      wget -c "$url" -O "$out"
+    fi
   else
-    curl -L --fail --retry 5 --retry-delay 2 -C - -o "$out" "$url"
+    if [[ -n "${HF_TOKEN:-}" ]]; then
+      curl -L --fail --retry 5 --retry-delay 2 -C - \
+        -H "Authorization: Bearer $HF_TOKEN" \
+        -o "$out" "$url"
+    else
+      curl -L --fail --retry 5 --retry-delay 2 -C - \
+        -o "$out" "$url"
+    fi
   fi
 }
 
