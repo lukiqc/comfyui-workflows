@@ -37,7 +37,6 @@ echo "== Installing nodes =="
 mkdir -p "$COMFY_DIR/custom_nodes"
 cd "$COMFY_DIR/custom_nodes"
 
-git clone https://github.com/city96/ComfyUI-GGUF.git || true
 git clone https://github.com/kijai/comfyui-kjnodes.git || true
 git clone https://github.com/chrisgoringe/cg-use-everywhere.git || true
 git clone https://github.com/chflame163/ComfyUI_LayerStyle.git || true
@@ -50,31 +49,25 @@ find custom_nodes -name "requirements.txt" -exec pip install -r {} \;
 
 echo "== Downloading models =="
 
-# --- GGUF Models (I2V 14B) ---
-dl "https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/HighNoise/Wan2.2-I2V-A14B-HighNoise-Q4_K_S.gguf" \
-   "$COMFY_DIR/models/unet/Wan2.2-I2V-A14B-HighNoise-Q4_K_S.gguf"
-dl "https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/LowNoise/Wan2.2-I2V-A14B-LowNoise-Q4_K_S.gguf" \
-   "$COMFY_DIR/models/unet/Wan2.2-I2V-A14B-LowNoise-Q4_K_S.gguf"
-
-# --- LoRAs ---
-dl "https://huggingface.co/lightx2v/Wan2.1-I2V-14B-480P-StepDistill-CfgDistill-Lightx2v/resolve/main/loras/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors" \
-   "$COMFY_DIR/models/loras/WAN 2/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors"
-dl "https://huggingface.co/jrewingwannabe/Wan2.1_I2V_14B_FusionX_LoRA/resolve/main/Wan2.1_I2V_14B_FusionX_LoRA.safetensors" \
-   "$COMFY_DIR/models/loras/WAN 2/Wan2.1_I2V_14B_FusionX_LoRA.safetensors"
+# --- Diffusion Models ---
+dl "https://huggingface.co/FX-FeiHou/wan2.2-Remix/resolve/main/NSFW/Wan2.2_Remix_NSFW_i2v_14b_high_lighting_v2.0.safetensors" \
+   "$COMFY_DIR/models/diffusion_models/Wan2.2_Remix_NSFW_i2v_14b_high_lighting_v2.0.safetensors"
+dl "https://huggingface.co/FX-FeiHou/wan2.2-Remix/resolve/main/NSFW/Wan2.2_Remix_NSFW_i2v_14b_low_lighting_v2.0.safetensors" \
+   "$COMFY_DIR/models/diffusion_models/Wan2.2_Remix_NSFW_i2v_14b_low_lighting_v2.0.safetensors"
 
 # --- Text Encoders ---
-dl "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" \
-   "$COMFY_DIR/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+dl "https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" \
+   "$COMFY_DIR/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors"
 
 # --- VAE ---
-dl "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_bf16.safetensors" \
+dl "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" \
    "$COMFY_DIR/models/vae/wan_2.1_vae.safetensors"
-dl "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan2.2_vae.safetensors" \
-   "$COMFY_DIR/models/vae/wan2.2_vae.safetensors"
 
-# --- Diffusion Models ---
-dl "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan22-Turbo/Wan2_2-TI2V-5B-Turbo_fp16.safetensors" \
-   "$COMFY_DIR/models/diffusion_models/WAN/wan2.2_ti2v_5B_fp16.safetensors"
+# --- LoRAs ---
+dl "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/LoRAs/Wan22-Lightning/old/Wan2.2-Lightning_I2V-A14B-4steps-lora_HIGH_fp16.safetensors" \
+   "$COMFY_DIR/models/loras/Wan2.2-Lightning_I2V-A14B-4steps-lora_HIGH_fp16.safetensors"
+dl "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/LoRAs/Wan22-Lightning/old/Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors" \
+   "$COMFY_DIR/models/loras/Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors"
 
 echo "====================================="
 echo "✔ Nodes installed"
