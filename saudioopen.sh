@@ -81,9 +81,12 @@ fi
 
 if [ -f "$NODE_DIR/requirements.txt" ]; then
   echo "== Installing node requirements =="
-  # --no-build-isolation lets flash_attn's setup.py find the already-installed
-  # torch; without it pip's isolated build env has no torch and the build fails.
-  $PIP_BIN install --no-build-isolation -r "$NODE_DIR/requirements.txt"
+  # Strip stable-audio-tools from the node requirements: we already installed it
+  # above with --no-deps to skip its pandas==2.0.2 pin. If we let pip re-resolve
+  # it here it will try to source-build pandas 2.0.2 which fails on Python 3.12.
+  # --no-build-isolation lets flash_attn's setup.py find the installed torch.
+  grep -iv "stable.audio.tools" "$NODE_DIR/requirements.txt" > /tmp/node-reqs-filtered.txt
+  $PIP_BIN install --no-build-isolation -r /tmp/node-reqs-filtered.txt
 fi
 
 # -----------------------------
