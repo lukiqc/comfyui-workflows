@@ -81,7 +81,9 @@ fi
 
 if [ -f "$NODE_DIR/requirements.txt" ]; then
   echo "== Installing node requirements =="
-  $PIP_BIN install -r "$NODE_DIR/requirements.txt"
+  # --no-build-isolation lets flash_attn's setup.py find the already-installed
+  # torch; without it pip's isolated build env has no torch and the build fails.
+  $PIP_BIN install --no-build-isolation -r "$NODE_DIR/requirements.txt"
 fi
 
 # -----------------------------
