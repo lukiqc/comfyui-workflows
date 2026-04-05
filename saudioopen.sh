@@ -42,9 +42,10 @@ echo "== Upgrading pip/setuptools/wheel =="
 $PYTHON_BIN -m pip install --upgrade pip setuptools wheel
 
 echo "== Installing core Stable Audio deps =="
-# Pre-install pandas with a wheel to avoid source-building pandas==2.0.2
-# (which fails on Python 3.12 due to missing pkg_resources in the build env)
-$PIP_BIN install -U "pandas>=2.1.0"
+# stable-audio-tools pins pandas==2.0.2, which has no wheel for Python 3.12
+# and fails to build in pip's isolated env (no pkg_resources). Build it with
+# --no-build-isolation so it uses the system setuptools we just upgraded above.
+$PIP_BIN install --no-build-isolation "pandas==2.0.2"
 
 # stable-audio-tools is the official Stability package
 # PyTorch must already be installed in your ComfyUI env
