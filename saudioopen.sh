@@ -1,137 +1,93 @@
 #!/usr/bin/env bash
-set -euo pipefail
+  set -euo pipefail
 
-# =========================================
-# Stable Audio Open 1.0 setup for ComfyUI
-# Tested concept: VastAI / Linux / ComfyUI
-# =========================================
+  COMFY_DIR="${COMFY_DIR:-/workspace/ComfyUI}"
+  NODE_DIR="$COMFY_DIR/custom_nodes/ComfyUI-StableAudioSampler"
+  TOOLS_DIR="$COMFY_DIR/custom-extensions/stable-audio-tools"
+  MODEL_DIR="$COMFY_DIR/models/audio_checkpoints"
+  MODEL_REPO="stabilityai/stable-audio-open-1.0"
 
-COMFY_DIR="${COMFY_DIR:-/workspace/ComfyUI}"
-NODE_DIR="$COMFY_DIR/custom_nodes/ComfyUI-StableAudioSampler"
-MODEL_DIR="$COMFY_DIR/models/audio_checkpoints"
-MODEL_REPO="stabilityai/stable-audio-open-1.0"
+  echo "== Using ComfyUI dir: $COMFY_DIR"
+  [ -d "$COMFY_DIR" ] || { echo "ERROR: ComfyUI dir not found: $COMFY_DIR"; exit 1; }
 
-echo "== Using ComfyUI dir: $COMFY_DIR"
+  # venv activation
 
-if [ ! -d "$COMFY_DIR" ]; then
-  echo "ERROR: ComfyUI dir not found at $COMFY_DIR"
-  exit 1
-fi
-
-# -----------------------------
-# Activate venv if present
-# -----------------------------
-if [ -f "$COMFY_DIR/venv/bin/activate" ]; then
+  if [ -f "$COMFY_DIR/venv/bin/activate" ]; then
   echo "== Activating ComfyUI venv =="
+
   # shellcheck disable=SC1091
+
   source "$COMFY_DIR/venv/bin/activate"
-else
+  else
   echo "== No ComfyUI venv found, using system python =="
-fi
+  fi
 
-PYTHON_BIN="${PYTHON_BIN:-python}"
-PIP_BIN="${PIP_BIN:-pip}"
+  PYTHON_BIN="${PYTHON_BIN:-python}"
+  PIP_BIN="${PIP_BIN:-pip}"
 
-echo "== Python =="
-$PYTHON_BIN --version
+  echo "== Python =="; $PYTHON_BIN --version
+  echo "== Upgrading pip/setuptools/wheel =="
+  $PYTHON_BIN -m pip install --upgrade pip setuptools wheel
 
-# -----------------------------
-# Basic tooling
-# -----------------------------
-echo "== Upgrading pip/setuptools/wheel =="
-$PYTHON_BIN -m pip install --upgrade pip setuptools wheel
+  # stable-audio-tools: local clone (preferred)
 
-echo "== Installing core Stable Audio deps =="
-# stable-audio-tools pins pandas==2.0.2 which has no wheel for Python 3.12 and
-# cannot be built from source (pkg_resources broken in this env's setuptools).
-# Install stable-audio-tools without deps to skip that pin, then install
-# pandas>=2.1.0 below which has pre-built wheels for Python 3.12.
-$PIP_BIN install --no-deps stable-audio-tools
+  echo "== Ensuring local stable-audio-tools clone =="
+  mkdir -p "$COMFY_DIR/custom-extensions"
+  if [ -d "$TOOLS_DIR/.git" ]; then
+  git -C "$TOOLS_DIR" pull --ff-only
+  elif [ -d "$TOOLS_DIR" ]; then
+  echo "Found $TOOLS_DIR (non-git). Leaving as-is."
+  else
+  git clone https://github.com/Stability-AI/stable-audio-tools.git "$TOOLS_DIR"
+  fi
 
-# PyTorch must already be installed in your ComfyUI env
-$PIP_BIN install -U \
-  "pandas>=2.1.0" \
-  huggingface_hub \
-  soundfile \
-  safetensors \
-  einops \
-  einops-exts \
-  ema-pytorch \
-  k-diffusion \
-  prefigure \
-  aeiou \
-  vector-quantize-pytorch \
-  v-diffusion-pytorch \
-  alias-free-torch \
-  transformers \
-  accelerate
+  # Minimal runtime extras for inference
 
-# -----------------------------
-# Install/update ComfyUI node
-# -----------------------------
-echo "== Installing ComfyUI-StableAudioSampler node =="
-mkdir -p "$COMFY_DIR/custom_nodes"
+  echo "== Installing minimal runtime deps =="
+  $PIP_BIN install -U \
+  einops safetensors aeiou "numpy<2.0" packaging \
+  k-diffusion ftfy regex tqdm huggingface_hub \
+  "git+https://github.com/openai/CLIP.git"
 
-if [ -d "$NODE_DIR/.git" ]; then
-  echo "== Node already exists, pulling latest =="
+  # Install/update this node
+
+  echo "== Installing ComfyUI-StableAudioSampler node =="
+  mkdir -p "$COMFY_DIR/custom_nodes"
+  if [ -d "$NODE_DIR/.git" ]; then
   git -C "$NODE_DIR" pull --ff-only
-else
-  git clone https://github.com/lks-ai/ComfyUI-StableAudioSampler.git "$NODE_DIR"
-fi
-
-if [ -f "$NODE_DIR/requirements.txt" ]; then
+  else
+  git clone https://github.com/lukiqc/ComfyUI-StableAudioSampler.git "$NODE_DIR"
+  fi
+  if [ -f "$NODE_DIR/requirements.txt" ]; then
   echo "== Installing node requirements =="
-  # Strip stable-audio-tools from the node requirements: we already installed it
-  # above with --no-deps to skip its pandas==2.0.2 pin. If we let pip re-resolve
-  # it here it will try to source-build pandas 2.0.2 which fails on Python 3.12.
-  # --no-build-isolation lets flash_attn's setup.py find the installed torch.
-  grep -iv "stable.audio.tools" "$NODE_DIR/requirements.txt" > /tmp/node-reqs-filtered.txt
-  $PIP_BIN install --no-build-isolation -r /tmp/node-reqs-filtered.txt
-fi
+  $PIP_BIN install -r "$NODE_DIR/requirements.txt"
+  fi
 
-# -----------------------------
-# Hugging Face auth check
-# -----------------------------
-if [ -z "${HF_TOKEN:-}" ]; then
+  # Optional: Hugging Face (skip if using local model files)
+
+  if [ -n "${HF_TOKEN:-}" ]; then
+  echo "== Logging into Hugging Face CLI =="
+  $PIP_BIN install -U "huggingface_hub[cli]" || true
+  if command -v hf >/dev/null 2>&1; then
+      hf auth login --token "$HF_TOKEN" || true
+  else
+      huggingface-cli login --token "$HF_TOKEN" || true
+  fi
+
+  echo "== Downloading Stable Audio Open 1.0 model files =="
+  mkdir -p "$MODEL_DIR"
+  hf download "$MODEL_REPO" model.safetensors --local-dir "$MODEL_DIR" || \
+  huggingface-cli download "$MODEL_REPO" model.safetensors --local-dir "$MODEL_DIR"
+  hf download "$MODEL_REPO" model_config.json --local-dir "$MODEL_DIR" || \
+  huggingface-cli download "$MODEL_REPO" model_config.json --local-dir "$MODEL_DIR"
+  else
+  echo "NOTE: HF_TOKEN not set. Skip download. Place model files in $MODEL_DIR."
+  fi
+
   echo
-  echo "ERROR: HF_TOKEN is not set."
-  echo "Set it first, for example:"
-  echo "  export HF_TOKEN=hf_xxxxxxxxxxxxxxxxx"
-  echo
-  echo "Also make sure you accepted the model terms on:"
-  echo "  https://huggingface.co/$MODEL_REPO"
-  exit 1
-fi
-
-# Login non-interactively
-echo "== Logging into Hugging Face CLI =="
-$PIP_BIN install -U "huggingface_hub[cli]"
-hf auth login --token "$HF_TOKEN" || true
-
-# -----------------------------
-# Download model files
-# -----------------------------
-echo "== Downloading Stable Audio Open 1.0 model files =="
-mkdir -p "$MODEL_DIR"
-
-# This node expects the model + config in models/audio_checkpoints
-hf download "$MODEL_REPO" model.safetensors --local-dir "$MODEL_DIR"
-hf download "$MODEL_REPO" model_config.json --local-dir "$MODEL_DIR"
-
-# -----------------------------
-# Final summary
-# -----------------------------
-echo
-echo "========================================="
-echo "Stable Audio Open 1.0 setup complete."
-echo "========================================="
-echo "Node repo:   $NODE_DIR"
-echo "Model files: $MODEL_DIR/model.safetensors"
-echo "             $MODEL_DIR/model_config.json"
-echo
-echo "Next steps:"
-echo "1) Restart ComfyUI"
-echo "2) Search for StableAudio nodes"
-echo "3) Load the model from models/audio_checkpoints"
-echo
-echo "If ComfyUI is already running, restart it now."
+  echo "========================================="
+  echo "Stable Audio Open setup complete."
+  echo "Node repo:   $NODE_DIR"
+  echo "Model files: $MODEL_DIR/model.safetensors (if downloaded)"
+  echo "             $MODEL_DIR/model_config.json (if downloaded)"
+  echo "========================================="
